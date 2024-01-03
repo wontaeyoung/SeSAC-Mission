@@ -9,17 +9,6 @@ import UIKit
 
 final class ViewController: UIViewController {
   // MARK: - Custom Type
-  struct BMI {
-    let height: Int
-    let weight: Int
-    let result: BMIResult
-    let date: Date
-    
-    func calculate() -> Int {
-      return weight / height * height
-    }
-  }
-  
   enum ValidationCase {
     case height
     case weight
@@ -35,11 +24,31 @@ final class ViewController: UIViewController {
     }
   }
   
-  enum BMIResult {
+  enum BMI: String {
     case 저체중
-    case 건강
+    case 정상
     case 과체중
     case 비만
+    case 검사불가
+    
+    static func checkBMI(bmi: Int) -> Self {
+      switch bmi {
+        case ...185:
+          return .저체중
+          
+        case 185...250:
+          return .정상
+          
+        case 250...300:
+          return .과체중
+          
+        case 300...350:
+          return .비만
+          
+        default:
+          return .검사불가
+      }
+    }
   }
   
   enum LabelStyle {
@@ -98,6 +107,37 @@ final class ViewController: UIViewController {
     isSecure.toggle()
     weightField.isSecureTextEntry = isSecure
     changeSecureToggleImage()
+  }
+  
+  @IBAction func resultButtonTapped(_ sender: UIButton) {
+    guard
+      let heightText = heightField.text,
+      let weightText = weightField.text,
+      let height = Int(heightText),
+      let weight = Int(weightText)
+    else {
+      print(#function, "텍스트 바인딩 실패")
+      return
+    }
+    
+    let bmi: Int = calculate(height: height, weight: weight)
+    let result: BMI = .checkBMI(bmi: bmi)
+    
+    showAlert(bmi: result)
+  }
+  
+  private func showAlert(bmi: BMI) {
+    let alert: UIAlertController = .init(
+      title: "검사 결과",
+      message: #"당신의 BMI 검사 결과는 '\#(bmi.rawValue)' 입니다!"#,
+      preferredStyle: .alert
+    )
+    
+    let action: UIAlertAction = .init(title: "확인", style: .default)
+    
+    alert.addAction(action)
+    
+    present(alert, animated: true)
   }
 }
 
@@ -219,6 +259,14 @@ extension ViewController {
     }
     
     return true
+  }
+  
+  private func calculate(height: Int, weight: Int) -> Int {
+    let height: Double = Double(height) / 100
+    let weight: Double = Double(weight)
+    let calculated: Double = weight / (height * height)
+    
+    return Int(calculated) * 10
   }
 }
 
