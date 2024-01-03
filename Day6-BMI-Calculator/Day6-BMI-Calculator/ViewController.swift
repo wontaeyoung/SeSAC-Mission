@@ -19,6 +19,21 @@ final class ViewController: UIViewController {
     }
   }
   
+  enum ValidationCase {
+    case height
+    case weight
+    
+    var validRange: ClosedRange<Int> {
+      switch self {
+        case .height:
+          return 100...250
+          
+        case .weight:
+          return 30...200
+      }
+    }
+  }
+  
   enum BMIResult {
     case 저체중
     case 건강
