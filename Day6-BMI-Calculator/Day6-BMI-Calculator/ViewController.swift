@@ -9,7 +9,7 @@ import UIKit
 
 final class ViewController: UIViewController {
   // MARK: - Custom Type
-  enum ValidationCase {
+  enum ValidationTarget {
     case height
     case weight
     
@@ -147,8 +147,8 @@ final class ViewController: UIViewController {
   
   @IBAction func randomButtonTapped(_ sender: UIButton) {
     guard
-      let randomHeight = ValidationCase.height.validRange.randomElement(),
-      let randomWeight = ValidationCase.weight.validRange.randomElement()
+      let randomHeight = ValidationTarget.height.validRange.randomElement(),
+      let randomWeight = ValidationTarget.weight.validRange.randomElement()
     else {
       print(#function, BMIError.getRandomNumberFailed.errorDescription)
       return
@@ -304,7 +304,7 @@ extension ViewController {
   
   private func changeInputInfoLabel(
     isValid: Bool,
-    target: ValidationCase,
+    target: ValidationTarget,
     isEmpty: Bool
   ) {
     switch target {
@@ -331,7 +331,7 @@ extension ViewController {
 extension ViewController {
   private func checkValidation(
     text: String,
-    target: ValidationCase
+    target: ValidationTarget
   ) -> Bool {
     guard
       text.contains(" ") == false,
