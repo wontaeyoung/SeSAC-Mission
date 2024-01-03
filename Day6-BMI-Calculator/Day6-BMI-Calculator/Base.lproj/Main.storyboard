@@ -30,20 +30,20 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNo-t9-XNf">
-                                        <rect key="frame" x="0.0" y="215.66666666666669" width="313" height="35"/>
+                                        <rect key="frame" x="0.0" y="220.66666666666669" width="313" height="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDe-XH-oee">
-                                        <rect key="frame" x="0.0" y="87.333333333333314" width="42" height="21"/>
+                                        <rect key="frame" x="0.0" y="82.333333333333314" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGI-fV-feG">
-                                        <rect key="frame" x="238" y="152.33333333333331" width="75" height="35"/>
+                                        <rect key="frame" x="267" y="152.33333333333331" width="46" height="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -59,7 +59,7 @@
                                     <constraint firstItem="GfB-P9-X3o" firstAttribute="leading" secondItem="U31-xp-EPU" secondAttribute="leading" id="Xtw-8W-9fE"/>
                                     <constraint firstAttribute="bottom" secondItem="BNo-t9-XNf" secondAttribute="bottom" id="fMu-ID-Pta"/>
                                     <constraint firstAttribute="trailing" secondItem="GfB-P9-X3o" secondAttribute="trailing" id="o8b-hW-id0"/>
-                                    <constraint firstItem="GfB-P9-X3o" firstAttribute="top" secondItem="MDe-XH-oee" secondAttribute="bottom" id="sCf-7c-jju"/>
+                                    <constraint firstItem="GfB-P9-X3o" firstAttribute="top" secondItem="MDe-XH-oee" secondAttribute="bottom" constant="5" id="sCf-7c-jju"/>
                                     <constraint firstAttribute="trailing" secondItem="hCE-dn-ZTS" secondAttribute="trailing" id="tqN-3q-ASJ"/>
                                     <constraint firstItem="MDe-XH-oee" firstAttribute="leading" secondItem="U31-xp-EPU" secondAttribute="leading" id="u6i-4m-tql"/>
                                 </constraints>
@@ -83,7 +83,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e29-uP-Uz8">
-                                <rect key="frame" x="40" y="279.66666666666669" width="42" height="21"/>
+                                <rect key="frame" x="40" y="274.66666666666669" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="onc-99-rxB"/>
                                 </constraints>
@@ -103,7 +103,7 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="U31-xp-EPU" secondAttribute="trailing" constant="40" id="2oj-fb-WAZ"/>
                             <constraint firstItem="Z4R-CL-Cqc" firstAttribute="leading" secondItem="WLX-Fs-SoU" secondAttribute="trailing" constant="10" id="6s6-zv-atw"/>
-                            <constraint firstItem="U31-xp-EPU" firstAttribute="top" secondItem="e29-uP-Uz8" secondAttribute="bottom" id="BVp-9M-6Cq"/>
+                            <constraint firstItem="U31-xp-EPU" firstAttribute="top" secondItem="e29-uP-Uz8" secondAttribute="bottom" constant="5" id="BVp-9M-6Cq"/>
                             <constraint firstItem="1OA-u9-PwF" firstAttribute="top" secondItem="WLX-Fs-SoU" secondAttribute="bottom" constant="10" id="EnJ-ST-3kG"/>
                             <constraint firstItem="WLX-Fs-SoU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FnI-8d-cTQ"/>
                             <constraint firstItem="Z4R-CL-Cqc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="JyS-P9-qRW"/>
