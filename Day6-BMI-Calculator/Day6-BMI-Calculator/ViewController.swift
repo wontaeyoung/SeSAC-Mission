@@ -91,7 +91,7 @@ extension ViewController {
     
     switch style {
       case .title:
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .systemFont(ofSize: 22, weight: .heavy)
         
       case .desc:
         label.font = .systemFont(ofSize: 16)
