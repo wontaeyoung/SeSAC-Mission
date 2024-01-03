@@ -41,6 +41,17 @@ final class ViewController: UIViewController {
     case 비만
   }
   
+  enum LabelStyle {
+    case title
+    case desc
+    case body
+  }
+  
+  enum ButtonStyle {
+    case random
+    case result
+  }
+  
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var logoImageView: UIImageView!
