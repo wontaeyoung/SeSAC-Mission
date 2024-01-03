@@ -73,3 +73,12 @@ final class ViewController: UIViewController {
   
 }
 
+enum Constant {
+  static let titleText: String = "BMI Calculator"
+  static let descText: String = "당신의 BMI 지수를 알려드릴게요."
+  static let heightText: String = "키가 어떻게 되시나요?"
+  static let weightText: String = "몸무게는 어떻게 되시나요?"
+  static let randomCalculateText: String =
+  "랜덤으로 BMI 계산하기"
+  static let checkResultText: String = "결과 확인"
+}
