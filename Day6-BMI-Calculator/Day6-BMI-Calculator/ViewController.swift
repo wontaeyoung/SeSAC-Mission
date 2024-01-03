@@ -80,6 +80,9 @@ extension ViewController {
     setLabel(descriptionLabel, text: Constant.descText, style: .desc)
     setLabel(heightLabel, text: Constant.heightText, style: .body)
     setLabel(weightLabel, text: Constant.weightText, style: .body)
+    
+    setButton(randomBMIButton, text: Constant.randomCalculateText, style: .random)
+    setButton(resultButton, text: Constant.checkResultText, style: .result)
   }
   
   private func setLabel(
@@ -101,6 +104,31 @@ extension ViewController {
         label.font = .systemFont(ofSize: 14)
     }
   }
+  
+  private func setButton(
+    _ button: UIButton,
+    text: String,
+    style: ButtonStyle
+  ) {
+    button.setTitle(text, for: .normal)
+    
+    switch style {
+      case .random:
+        button.setTitleColor(.randomButtonTitle, for: .normal)
+        button.titleLabel?.textAlignment = .right
+        
+      case .result:
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .resultButtonBackground
+        button.layer.cornerRadius = 10
+        
+    }
+  }
+}
+
+// MARK: - Logic
+extension ViewController {
+  
 }
 
 enum Constant {
