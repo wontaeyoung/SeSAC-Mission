@@ -41,8 +41,17 @@ final class ViewController: UIViewController {
     case 비만
   }
   
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var descriptionLabel: UILabel!
+  @IBOutlet weak var logoImageView: UIImageView!
+  
+  @IBOutlet weak var heightLabel: UILabel!
+  @IBOutlet weak var weightLabel: UILabel!
+  
   @IBOutlet weak var heightField: UITextField!
   @IBOutlet weak var weightField: UITextField!
+  
+  @IBOutlet weak var randomBMIButton: UIButton!
   @IBOutlet weak var resultButton: UIButton!
   
   override func viewDidLoad() {
