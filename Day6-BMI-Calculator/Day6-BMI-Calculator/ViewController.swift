@@ -177,6 +177,10 @@ final class ViewController: UIViewController {
     showAlert(bmi: result)
   }
   
+  @IBAction func keyboardDismiss(_ sender: UITapGestureRecognizer) {
+    view.endEditing(true)
+  }
+  
   // MARK: - Method
   private func showAlert(bmi: BMI) {
     let alert: UIAlertController = .init(
