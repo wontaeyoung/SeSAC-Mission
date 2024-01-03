@@ -67,10 +67,40 @@ final class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    
+    configureUI()
+  }
+    
+}
+
+// MARK: - Set UI
+extension ViewController {
+  private func configureUI() {
+    setLabel(titleLabel, text: Constant.titleText, style: .title)
+    setLabel(descriptionLabel, text: Constant.descText, style: .desc)
+    setLabel(heightLabel, text: Constant.heightText, style: .body)
+    setLabel(weightLabel, text: Constant.weightText, style: .body)
   }
   
-  
+  private func setLabel(
+    _ label: UILabel,
+    text: String,
+    style: LabelStyle
+  ) {
+    label.text = text
+    
+    switch style {
+      case .title:
+        label.font = .boldSystemFont(ofSize: 24)
+        
+      case .desc:
+        label.font = .systemFont(ofSize: 16)
+        label.numberOfLines = .zero
+        
+      case .body:
+        label.font = .systemFont(ofSize: 14)
+    }
+  }
 }
 
 enum Constant {

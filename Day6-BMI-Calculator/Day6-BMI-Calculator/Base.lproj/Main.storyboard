@@ -65,7 +65,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLX-Fs-SoU">
-                                <rect key="frame" x="20" y="59" width="42" height="25"/>
+                                <rect key="frame" x="20" y="59" width="169.66666666666666" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="zAf-2a-VYJ"/>
                                 </constraints>
@@ -74,9 +74,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1OA-u9-PwF">
-                                <rect key="frame" x="20" y="94" width="42" height="21"/>
+                                <rect key="frame" x="20" y="94" width="169.66666666666666" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="b26-Cz-jHR"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="b26-Cz-jHR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -102,12 +102,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="U31-xp-EPU" secondAttribute="trailing" constant="40" id="2oj-fb-WAZ"/>
+                            <constraint firstItem="Z4R-CL-Cqc" firstAttribute="leading" secondItem="WLX-Fs-SoU" secondAttribute="trailing" constant="10" id="6s6-zv-atw"/>
                             <constraint firstItem="U31-xp-EPU" firstAttribute="top" secondItem="e29-uP-Uz8" secondAttribute="bottom" id="BVp-9M-6Cq"/>
                             <constraint firstItem="1OA-u9-PwF" firstAttribute="top" secondItem="WLX-Fs-SoU" secondAttribute="bottom" constant="10" id="EnJ-ST-3kG"/>
                             <constraint firstItem="WLX-Fs-SoU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FnI-8d-cTQ"/>
                             <constraint firstItem="Z4R-CL-Cqc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="JyS-P9-qRW"/>
                             <constraint firstItem="e29-uP-Uz8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="QY1-UC-9pr"/>
                             <constraint firstItem="U31-xp-EPU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="XJk-Iz-AHC"/>
+                            <constraint firstItem="Z4R-CL-Cqc" firstAttribute="leading" secondItem="1OA-u9-PwF" secondAttribute="trailing" constant="10" id="lcG-wz-KW7"/>
                             <constraint firstItem="WLX-Fs-SoU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="oAQ-B2-4xO"/>
                             <constraint firstItem="U31-xp-EPU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="q02-dl-zVv"/>
                             <constraint firstItem="U31-xp-EPU" firstAttribute="top" secondItem="Z4R-CL-Cqc" secondAttribute="bottom" id="qMd-5y-LIE"/>
