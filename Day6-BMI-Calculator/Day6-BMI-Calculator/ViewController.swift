@@ -93,6 +93,12 @@ final class ViewController: UIViewController {
     
     changeResultButtonEnabled(isValid: isValid)
   }
+  
+  @IBAction func secureToggleTapped(_ sender: UIButton) {
+    isSecure.toggle()
+    weightField.isSecureTextEntry = isSecure
+    changeSecureToggleImage()
+  }
 }
 
 // MARK: - Set UI
@@ -185,6 +191,16 @@ extension ViewController {
       resultButton.backgroundColor = .gray
       resultButton.isEnabled = false
     }
+  }
+  
+  private func changeSecureToggleImage() {
+    let symbol: String = isSecure
+    ? Constant.secureOffSymbol
+    : Constant.secureOnSymbol
+    
+    let image: UIImage? = .init(systemName: symbol)
+    
+    secureToggleButton.setImage(image, for: .normal)
   }
 }
 
