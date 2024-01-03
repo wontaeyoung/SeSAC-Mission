@@ -128,6 +128,19 @@ final class ViewController: UIViewController {
     changeSecureToggleImage()
   }
   
+  @IBAction func randomButtonTapped(_ sender: UIButton) {
+    guard
+      let randomHeight = ValidationCase.height.validRange.randomElement(),
+      let randomWeight = ValidationCase.weight.validRange.randomElement()
+    else {
+      print(#function, BMIError.getRandomNumberFailed.errorDescription)
+      return
+    }
+      
+    heightField.text = randomHeight.description
+    weightField.text = randomWeight.description
+  }
+  
   @IBAction func resultButtonTapped(_ sender: UIButton) {
     guard
       let heightText = heightField.text,
