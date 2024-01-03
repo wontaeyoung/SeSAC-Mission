@@ -8,6 +8,7 @@
 import UIKit
 
 final class ViewController: UIViewController {
+  // MARK: - Custom Type
   struct BMI {
     let height: Int
     let weight: Int
@@ -50,8 +51,10 @@ final class ViewController: UIViewController {
   enum ButtonStyle {
     case random
     case result
+    case secure
   }
   
+  // MARK: - IBOutlet
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var logoImageView: UIImageView!
@@ -64,7 +67,12 @@ final class ViewController: UIViewController {
   
   @IBOutlet weak var randomBMIButton: UIButton!
   @IBOutlet weak var resultButton: UIButton!
+  @IBOutlet weak var secureToggleButton: UIButton!
   
+  // MARK: - Property
+  private var isSecure: Bool = false
+  
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -83,6 +91,7 @@ extension ViewController {
     
     setButton(randomBMIButton, text: Constant.randomCalculateText, style: .random)
     setButton(resultButton, text: Constant.checkResultText, style: .result)
+    setButton(secureToggleButton, text: Constant.secureOnSymbol, style: .secure)
     
     setImageView(logoImageView)
   }
@@ -112,24 +121,41 @@ extension ViewController {
     text: String,
     style: ButtonStyle
   ) {
-    button.setTitle(text, for: .normal)
+    
     
     switch style {
       case .random:
+        button.setTitle(text, for: .normal)
         button.setTitleColor(.randomButtonTitle, for: .normal)
         button.titleLabel?.textAlignment = .right
         
       case .result:
+        button.setTitle(text, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .resultButtonBackground
         button.layer.cornerRadius = 10
         
+      case .secure:
+        let imageFont: UIFont = .systemFont(ofSize: 12)
+        let config: UIImage.SymbolConfiguration = .init(font: imageFont)
+        button.setImage(
+          .init(systemName: text, withConfiguration: config),
+          for: .normal
+        )
+        button.tintColor = .gray
     }
   }
   
   private func setImageView(_ imageView: UIImageView) {
     imageView.image = .logo
     imageView.contentMode = .scaleAspectFit
+  }
+  
+  private func setTextField(_ field: UITextField) {
+    field.borderStyle = .bezel
+    field.keyboardType = .numberPad
+    field.autocorrectionType = .no
+    field.autocapitalizationType = .none
   }
 }
 
@@ -146,4 +172,7 @@ enum Constant {
   static let randomCalculateText: String =
   "랜덤으로 BMI 계산하기"
   static let checkResultText: String = "결과 확인"
+  
+  static let secureOnSymbol: String = "eye.slash.fill"
+  static let secureOffSymbol: String = "eye.fill"
 }

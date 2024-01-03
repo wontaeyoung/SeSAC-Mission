@@ -48,13 +48,19 @@
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naK-aC-0g7">
+                                        <rect key="frame" x="273" y="75" width="30" height="34"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="LGI-fV-feG" firstAttribute="top" secondItem="GfB-P9-X3o" secondAttribute="bottom" constant="10" id="0oI-ZB-Fwe"/>
                                     <constraint firstItem="hCE-dn-ZTS" firstAttribute="leading" secondItem="U31-xp-EPU" secondAttribute="leading" id="4dt-bl-ML1"/>
                                     <constraint firstAttribute="trailing" secondItem="BNo-t9-XNf" secondAttribute="trailing" id="86l-S6-M7C"/>
+                                    <constraint firstItem="naK-aC-0g7" firstAttribute="bottom" secondItem="GfB-P9-X3o" secondAttribute="bottom" id="8wJ-dZ-u2g"/>
                                     <constraint firstAttribute="trailing" secondItem="LGI-fV-feG" secondAttribute="trailing" id="C05-9z-CAJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="naK-aC-0g7" secondAttribute="trailing" constant="10" id="Lfi-sm-NCU"/>
                                     <constraint firstAttribute="width" secondItem="U31-xp-EPU" secondAttribute="height" multiplier="1:0.8" id="RSs-2A-TYx"/>
                                     <constraint firstItem="BNo-t9-XNf" firstAttribute="leading" secondItem="U31-xp-EPU" secondAttribute="leading" id="SL8-dL-XQd"/>
                                     <constraint firstItem="hCE-dn-ZTS" firstAttribute="top" secondItem="U31-xp-EPU" secondAttribute="top" id="WWO-ko-DlK"/>
@@ -65,6 +71,7 @@
                                     <constraint firstItem="GfB-P9-X3o" firstAttribute="top" secondItem="MDe-XH-oee" secondAttribute="bottom" constant="5" id="sCf-7c-jju"/>
                                     <constraint firstAttribute="trailing" secondItem="hCE-dn-ZTS" secondAttribute="trailing" id="tqN-3q-ASJ"/>
                                     <constraint firstItem="MDe-XH-oee" firstAttribute="leading" secondItem="U31-xp-EPU" secondAttribute="leading" id="u6i-4m-tql"/>
+                                    <constraint firstItem="naK-aC-0g7" firstAttribute="top" secondItem="GfB-P9-X3o" secondAttribute="top" id="vMi-no-d3k"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLX-Fs-SoU">
@@ -127,6 +134,7 @@
                         <outlet property="logoImageView" destination="Z4R-CL-Cqc" id="Yaz-ca-63L"/>
                         <outlet property="randomBMIButton" destination="LGI-fV-feG" id="Bod-or-gxV"/>
                         <outlet property="resultButton" destination="BNo-t9-XNf" id="tUs-9G-WI4"/>
+                        <outlet property="secureToggleButton" destination="naK-aC-0g7" id="aYh-qB-e0w"/>
                         <outlet property="titleLabel" destination="WLX-Fs-SoU" id="iFy-va-2rJ"/>
                         <outlet property="weightField" destination="GfB-P9-X3o" id="U8Z-Pd-eHZ"/>
                         <outlet property="weightLabel" destination="MDe-XH-oee" id="YTt-Yx-xJW"/>
@@ -134,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="-27"/>
+            <point key="canvasLocation" x="130.53435114503816" y="-27.464788732394368"/>
         </scene>
     </scenes>
     <resources>
