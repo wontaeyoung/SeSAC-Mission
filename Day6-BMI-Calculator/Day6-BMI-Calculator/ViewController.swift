@@ -42,7 +42,7 @@ final class ViewController: UIViewController {
         case 250...300:
           return .과체중
           
-        case 300...350:
+        case 300...:
           return .비만
           
         default:
@@ -73,6 +73,7 @@ final class ViewController: UIViewController {
   enum LabelStyle {
     case title
     case desc
+    case inputValidInfo
     case body
   }
   
@@ -89,6 +90,9 @@ final class ViewController: UIViewController {
   
   @IBOutlet weak var heightLabel: UILabel!
   @IBOutlet weak var weightLabel: UILabel!
+  
+  @IBOutlet weak var heightInputInfoLabel: UILabel!
+  @IBOutlet weak var weightInputInfoLabel: UILabel!
   
   @IBOutlet weak var heightField: UITextField!
   @IBOutlet weak var weightField: UITextField!
@@ -107,6 +111,7 @@ final class ViewController: UIViewController {
     configureUI()
   }
   
+  // MARK: - IBAction
   @IBAction func inputChanged(_ sender: UITextField) {
     guard
       let height = heightField.text,
@@ -116,10 +121,22 @@ final class ViewController: UIViewController {
       return
     }
     
-    let isValid: Bool = checkValidation(text: height, target: .height)
-    && checkValidation(text: weight, target: .weight)
+    let isHeightValid: Bool = checkValidation(text: height, target: .height)
+    let isWeightValid: Bool = checkValidation(text: weight, target: .weight)
     
-    changeResultButtonEnabled(isValid: isValid)
+    changeInputInfoLabel(
+      isValid: isHeightValid,
+      target: .height,
+      isEmpty: height.isEmpty
+    )
+    
+    changeInputInfoLabel(
+      isValid: isWeightValid,
+      target: .weight,
+      isEmpty: weight.isEmpty
+    )
+    
+    changeResultButtonEnabled(isValid: isHeightValid && isWeightValid)
   }
   
   @IBAction func secureToggleTapped(_ sender: UIButton) {
@@ -136,9 +153,10 @@ final class ViewController: UIViewController {
       print(#function, BMIError.getRandomNumberFailed.errorDescription)
       return
     }
-      
+    
     heightField.text = randomHeight.description
     weightField.text = randomWeight.description
+    self.inputChanged(.init())
   }
   
   @IBAction func resultButtonTapped(_ sender: UIButton) {
@@ -153,11 +171,13 @@ final class ViewController: UIViewController {
     }
     
     let bmi: Int = calculate(height: height, weight: weight)
+    print(bmi)
     let result: BMI = .checkBMI(bmi: bmi)
     
     showAlert(bmi: result)
   }
   
+  // MARK: - Method
   private func showAlert(bmi: BMI) {
     let alert: UIAlertController = .init(
       title: "검사 결과",
@@ -180,6 +200,8 @@ extension ViewController {
     setLabel(descriptionLabel, text: Constant.descText, style: .desc)
     setLabel(heightLabel, text: Constant.heightText, style: .body)
     setLabel(weightLabel, text: Constant.weightText, style: .body)
+    setLabel(heightInputInfoLabel, text: Constant.heightInvalidText, style: .inputValidInfo)
+    setLabel(weightInputInfoLabel, text: Constant.weightInvalidText, style: .inputValidInfo)
     
     setButton(randomBMIButton, text: Constant.randomCalculateText, style: .random)
     setButton(resultButton, text: Constant.checkResultText, style: .result)
@@ -209,6 +231,11 @@ extension ViewController {
         
       case .body:
         label.font = .systemFont(ofSize: 14)
+        
+      case .inputValidInfo:
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .red
+        label.isHidden = true
     }
   }
   
@@ -274,6 +301,30 @@ extension ViewController {
     
     secureToggleButton.setImage(image, for: .normal)
   }
+  
+  private func changeInputInfoLabel(
+    isValid: Bool,
+    target: ValidationCase,
+    isEmpty: Bool
+  ) {
+    switch target {
+      case .height:
+        guard isEmpty == false else {
+          heightInputInfoLabel.isHidden = true
+          return
+        }
+        
+        heightInputInfoLabel.isHidden = isValid
+        
+      case .weight:
+        guard isEmpty == false else {
+          weightInputInfoLabel.isHidden = true
+          return
+        }
+        
+        weightInputInfoLabel.isHidden = isValid
+    }
+  }
 }
 
 // MARK: - Logic
@@ -306,7 +357,9 @@ enum Constant {
   static let titleText: String = "BMI Calculator"
   static let descText: String = "당신의 BMI 지수를 알려드릴게요."
   static let heightText: String = "키가 어떻게 되시나요?"
+  static let heightInvalidText: String = "키는 100 ~ 250 사이로 입력 가능해요!"
   static let weightText: String = "몸무게는 어떻게 되시나요?"
+  static let weightInvalidText: String = "몸무게는 30 ~ 200 사이로 입력 가능해요!"
   static let randomCalculateText: String =
   "랜덤으로 BMI 계산하기"
   static let checkResultText: String = "결과 확인"
