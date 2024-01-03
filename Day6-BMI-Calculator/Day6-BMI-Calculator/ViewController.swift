@@ -83,6 +83,8 @@ extension ViewController {
     
     setButton(randomBMIButton, text: Constant.randomCalculateText, style: .random)
     setButton(resultButton, text: Constant.checkResultText, style: .result)
+    
+    setImageView(logoImageView)
   }
   
   private func setLabel(
@@ -123,6 +125,11 @@ extension ViewController {
         button.layer.cornerRadius = 10
         
     }
+  }
+  
+  private func setImageView(_ imageView: UIImageView) {
+    imageView.image = .logo
+    imageView.contentMode = .scaleAspectFit
   }
 }
 
