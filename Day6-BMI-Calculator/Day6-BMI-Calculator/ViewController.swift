@@ -78,7 +78,21 @@ final class ViewController: UIViewController {
     
     configureUI()
   }
+  
+  @IBAction func inputChanged(_ sender: UITextField) {
+    guard
+      let height = heightField.text,
+      let weight = weightField.text
+    else {
+      print("텍스트를 찾을 수 없습니다.")
+      return
+    }
     
+    let isValid: Bool = checkValidation(text: height, target: .height)
+    && checkValidation(text: weight, target: .weight)
+    
+    changeResultButtonEnabled(isValid: isValid)
+  }
 }
 
 // MARK: - Set UI
@@ -97,7 +111,7 @@ extension ViewController {
     
     setTextField(heightField)
     setTextField(weightField)
-    
+    weightField.tag = 1
   }
   
   private func setLabel(
@@ -125,8 +139,6 @@ extension ViewController {
     text: String,
     style: ButtonStyle
   ) {
-    
-    
     switch style {
       case .random:
         button.setTitle(text, for: .normal)
@@ -136,8 +148,9 @@ extension ViewController {
       case .result:
         button.setTitle(text, for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .resultButtonBackground
+        button.backgroundColor = .gray
         button.layer.cornerRadius = 10
+        button.isEnabled = false
         
       case .secure:
         let imageFont: UIFont = .systemFont(ofSize: 12)
@@ -163,11 +176,34 @@ extension ViewController {
     field.layer.borderColor = UIColor.gray.cgColor
     field.layer.borderWidth = 2
   }
+  
+  private func changeResultButtonEnabled(isValid: Bool) {
+    if isValid {
+      resultButton.backgroundColor = .resultButtonBackground
+      resultButton.isEnabled = true
+    } else {
+      resultButton.backgroundColor = .gray
+      resultButton.isEnabled = false
+    }
+  }
 }
 
 // MARK: - Logic
 extension ViewController {
-  
+  private func checkValidation(
+    text: String,
+    target: ValidationCase
+  ) -> Bool {
+    guard
+      text.contains(" ") == false,
+      let number = Int(text),
+      target.validRange.contains(number)
+    else {
+      return false
+    }
+    
+    return true
+  }
 }
 
 enum Constant {

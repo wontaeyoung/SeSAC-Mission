@@ -23,11 +23,17 @@
                                         <rect key="frame" x="0.0" y="0.0" width="313" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="64u-uo-TqL"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GfB-P9-X3o">
                                         <rect key="frame" x="0.0" y="75" width="313" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="nhh-pi-2rI"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNo-t9-XNf">
                                         <rect key="frame" x="0.0" y="210.66666666666663" width="313" height="40"/>
