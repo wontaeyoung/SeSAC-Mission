@@ -51,6 +51,25 @@ final class ViewController: UIViewController {
     }
   }
   
+  enum BMIError: Error {
+    case optionalBindingFailed
+    case textUnfindable
+    case getRandomNumberFailed
+    
+    var errorDescription: String {
+      switch self {
+        case .optionalBindingFailed:
+          return "옵셔널 바인딩에 실패했습니다."
+          
+        case .textUnfindable:
+          return "텍스트를 찾지 못했습니다."
+          
+        case .getRandomNumberFailed:
+          return "랜덤 숫자 획득에 실패했습니다."
+      }
+    }
+  }
+  
   enum LabelStyle {
     case title
     case desc
@@ -93,7 +112,7 @@ final class ViewController: UIViewController {
       let height = heightField.text,
       let weight = weightField.text
     else {
-      print("텍스트를 찾을 수 없습니다.")
+      print(#function, BMIError.textUnfindable.errorDescription)
       return
     }
     
@@ -116,7 +135,7 @@ final class ViewController: UIViewController {
       let height = Int(heightText),
       let weight = Int(weightText)
     else {
-      print(#function, "텍스트 바인딩 실패")
+      print(#function, BMIError.optionalBindingFailed.errorDescription)
       return
     }
     
