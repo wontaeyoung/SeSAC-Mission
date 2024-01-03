@@ -26,6 +26,10 @@ final class ViewController: UIViewController {
     case 비만
   }
   
+  @IBOutlet weak var heightField: UITextField!
+  @IBOutlet weak var weightField: UITextField!
+  @IBOutlet weak var resultButton: UIButton!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
