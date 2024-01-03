@@ -94,6 +94,10 @@ extension ViewController {
     setButton(secureToggleButton, text: Constant.secureOnSymbol, style: .secure)
     
     setImageView(logoImageView)
+    
+    setTextField(heightField)
+    setTextField(weightField)
+    
   }
   
   private func setLabel(
@@ -152,10 +156,12 @@ extension ViewController {
   }
   
   private func setTextField(_ field: UITextField) {
-    field.borderStyle = .bezel
     field.keyboardType = .numberPad
     field.autocorrectionType = .no
     field.autocapitalizationType = .none
+    field.layer.cornerRadius = 10
+    field.layer.borderColor = UIColor.gray.cgColor
+    field.layer.borderWidth = 2
   }
 }
 
