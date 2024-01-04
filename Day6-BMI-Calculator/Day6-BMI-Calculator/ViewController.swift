@@ -9,6 +9,12 @@ import UIKit
 
 final class ViewController: UIViewController {
   // MARK: - Custom Type
+  struct LastHistory {
+    var nickname: String = ""
+    var height: Int = 0
+    var weight: Int = 0
+  }
+  
   enum ValidationTarget {
     case height
     case weight
@@ -119,14 +125,24 @@ final class ViewController: UIViewController {
   @IBOutlet weak var nicknameLabel: UILabel!
   @IBOutlet weak var nicknameField: UITextField!
   
+  
+  @IBOutlet weak var historyLabel: UILabel!
+  @IBOutlet weak var historyValueLabel: UILabel!
+  
   // MARK: - Property
   private var isSecure: Bool = false
+  private var lastHistory = LastHistory() {
+    didSet {
+      changeHistoryLabel()
+    }
+  }
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
     configureUI()
+    fetch()
   }
   
   // MARK: - IBAction
@@ -192,11 +208,12 @@ final class ViewController: UIViewController {
     let result: BMI = .checkBMI(bmi: bmi)
     
     showAlert(bmi: result)
-    save(
-      nickname: nicknameField.text ?? "당신",
-      height: height,
-      weight: weight
-    )
+    
+    lastHistory.nickname = nicknameField.text ?? "당신"
+    lastHistory.height = height
+    lastHistory.weight = weight
+    
+    save()
   }
   
   @IBAction func keyboardDismiss(_ sender: UITapGestureRecognizer) {
@@ -267,6 +284,9 @@ extension ViewController {
     setLabel(nicknameLabel, text: Constant.nicknameText, style: .body)
     setTextField(nicknameField)
     
+    setLabel(historyLabel, text: Constant.historyText, style: .body)
+    
+    
     heightField.tag = TextFieldTag.height.tag
     weightField.tag = TextFieldTag.weight.tag
   }
@@ -284,7 +304,7 @@ extension ViewController {
         
       case .desc:
         label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = .zero
+        label.numberOfLines = 2
         
       case .body:
         label.font = .systemFont(ofSize: 14)
@@ -384,6 +404,10 @@ extension ViewController {
     }
   }
   
+  private func changeHistoryLabel() {
+    historyValueLabel.text = "\(lastHistory.nickname): \(lastHistory.height)cm x \(lastHistory.weight)"
+  }
+  
   private func injectHideKeyboardToolbar(_ field: UITextField) {
     let toolbar = UIToolbar()
     
@@ -465,14 +489,16 @@ extension ViewController {
     return Int(calculated) * 10
   }
   
-  private func save(
-    nickname: String,
-    height: Int,
-    weight: Int
-  ) {
-    UserDefaults.standard.set(nickname, forKey: UserDefaultKey.nickname.rawValue)
-    UserDefaults.standard.set(height, forKey: UserDefaultKey.height.rawValue)
-    UserDefaults.standard.set(weight, forKey: UserDefaultKey.weight.rawValue)
+  private func save() {
+    UserDefaults.standard.set(lastHistory.nickname, forKey: UserDefaultKey.nickname.rawValue)
+    UserDefaults.standard.set(lastHistory.height, forKey: UserDefaultKey.height.rawValue)
+    UserDefaults.standard.set(lastHistory.weight, forKey: UserDefaultKey.weight.rawValue)
+  }
+  
+  private func fetch() {
+    lastHistory.nickname = UserDefaults.standard.string(forKey: UserDefaultKey.nickname.rawValue) ?? "당신"
+    lastHistory.height = UserDefaults.standard.integer(forKey: UserDefaultKey.height.rawValue)
+    lastHistory.weight = UserDefaults.standard.integer(forKey: UserDefaultKey.weight.rawValue)
   }
 }
 
@@ -487,6 +513,7 @@ enum Constant {
   "랜덤으로 BMI 계산하기"
   static let checkResultText: String = "결과 확인"
   static let nicknameText: String = "닉네임을 알려주세요!"
+  static let historyText: String = "가장 최근 검사 결과"
   
   static let secureOnSymbol: String = "eye.slash.fill"
   static let secureOffSymbol: String = "eye.fill"

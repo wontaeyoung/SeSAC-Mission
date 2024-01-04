@@ -216,6 +216,8 @@
                         <outlet property="heightField" destination="hCE-dn-ZTS" id="oce-nE-6zc"/>
                         <outlet property="heightInputInfoLabel" destination="Dj2-AM-OAg" id="s5g-9B-NbJ"/>
                         <outlet property="heightLabel" destination="e29-uP-Uz8" id="eIK-iH-n8f"/>
+                        <outlet property="historyLabel" destination="o29-YA-JrB" id="ejp-aD-Dbj"/>
+                        <outlet property="historyValueLabel" destination="WJq-Gr-7Jc" id="VBI-NI-Rrm"/>
                         <outlet property="logoImageView" destination="Z4R-CL-Cqc" id="Yaz-ca-63L"/>
                         <outlet property="nicknameField" destination="lDm-3G-zhj" id="RZT-89-BZf"/>
                         <outlet property="nicknameLabel" destination="LUo-go-nXe" id="cI4-5x-3SW"/>
