@@ -24,16 +24,20 @@ final class ViewController: UIViewController {
       self.image = image
       self.title = title
       self.label = label
-      self.count = count
+      self.count = UserDefaults.standard.integer(forKey: title)
     }
     
     private func increase() {
       count += 1
     }
     
+    private func setCount() {
+      UserDefaults.standard.set(count, forKey: title)
+    }
+    
     func updateLabel() {
       increase()
-      
+      setCount()
       label.text = title + " " + count.description
     }
   }
