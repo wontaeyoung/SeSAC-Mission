@@ -60,6 +60,12 @@ final class ViewController: UIViewController {
     }
   }
   
+  enum UserDefaultKey: String {
+    case nickname
+    case height
+    case weight
+  }
+  
   enum BMIError: Error {
     case optionalBindingFailed
     case textUnfindable
@@ -109,6 +115,9 @@ final class ViewController: UIViewController {
   @IBOutlet weak var randomBMIButton: UIButton!
   @IBOutlet weak var resultButton: UIButton!
   @IBOutlet weak var secureToggleButton: UIButton!
+  
+  @IBOutlet weak var nicknameLabel: UILabel!
+  @IBOutlet weak var nicknameField: UITextField!
   
   // MARK: - Property
   private var isSecure: Bool = false
@@ -183,10 +192,28 @@ final class ViewController: UIViewController {
     let result: BMI = .checkBMI(bmi: bmi)
     
     showAlert(bmi: result)
+    save(
+      nickname: nicknameField.text ?? "당신",
+      height: height,
+      weight: weight
+    )
   }
   
   @IBAction func keyboardDismiss(_ sender: UITapGestureRecognizer) {
     view.endEditing(true)
+  }
+  
+  @IBAction func nicknameFieldReturned(_ sender: UITextField) {
+    UserDefaults.standard.set(nicknameField.text, forKey: UserDefaultKey.nickname.rawValue)
+  }
+  
+  @IBAction func nicknameInputChanged(_ sender: UITextField) {
+    guard let text = sender.text else {
+      print(#function, BMIError.optionalBindingFailed.errorDescription)
+      return
+    }
+    
+    descriptionLabel.text = text + "의 BMI 지수를 알려드릴게요."
   }
   
   // MARK: - Method
@@ -236,6 +263,9 @@ extension ViewController {
     
     setTextField(heightField)
     setTextField(weightField)
+    
+    setLabel(nicknameLabel, text: Constant.nicknameText, style: .body)
+    setTextField(nicknameField)
     
     heightField.tag = TextFieldTag.height.tag
     weightField.tag = TextFieldTag.weight.tag
@@ -372,9 +402,18 @@ extension ViewController {
       action: #selector(hideKeyboardBarButtonTapped)
     )
     
-    let toolbarItems: [UIBarButtonItem] = field == heightField
-    ? [flexibleSpace, moveFieldBarButton]
-    : [moveFieldBarButton, flexibleSpace, hideKeyboardBarButton]
+    let toolbarItems: [UIBarButtonItem] 
+    
+    switch field {
+      case heightField:
+        toolbarItems = [flexibleSpace, moveFieldBarButton]
+        
+      case weightField:
+        toolbarItems = [moveFieldBarButton, flexibleSpace, hideKeyboardBarButton]
+        
+      default:
+        toolbarItems = [flexibleSpace, hideKeyboardBarButton]
+    }
     
     toolbar.sizeToFit()
     toolbar.setItems(toolbarItems, animated: true)
@@ -425,11 +464,21 @@ extension ViewController {
     
     return Int(calculated) * 10
   }
+  
+  private func save(
+    nickname: String,
+    height: Int,
+    weight: Int
+  ) {
+    UserDefaults.standard.set(nickname, forKey: UserDefaultKey.nickname.rawValue)
+    UserDefaults.standard.set(height, forKey: UserDefaultKey.height.rawValue)
+    UserDefaults.standard.set(weight, forKey: UserDefaultKey.weight.rawValue)
+  }
 }
 
 enum Constant {
   static let titleText: String = "BMI Calculator"
-  static let descText: String = "당신의 BMI 지수를 알려드릴게요."
+  static let descText: String = "\(UserDefaults.standard.string(forKey: ViewController.UserDefaultKey.nickname.rawValue) ?? "당신")의 BMI 지수를 알려드릴게요."
   static let heightText: String = "키가 어떻게 되시나요?"
   static let heightInvalidText: String = "키는 100 ~ 250 사이로 입력 가능해요!"
   static let weightText: String = "몸무게는 어떻게 되시나요?"
@@ -437,6 +486,7 @@ enum Constant {
   static let randomCalculateText: String =
   "랜덤으로 BMI 계산하기"
   static let checkResultText: String = "결과 확인"
+  static let nicknameText: String = "닉네임을 알려주세요!"
   
   static let secureOnSymbol: String = "eye.slash.fill"
   static let secureOffSymbol: String = "eye.fill"
