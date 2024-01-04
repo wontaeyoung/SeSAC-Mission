@@ -165,7 +165,7 @@ final class ViewController: UIViewController {
     
     heightField.text = randomHeight.description
     weightField.text = randomWeight.description
-    self.inputChanged(.init())
+    self.inputChanged(UITextField())
   }
   
   @IBAction func resultButtonTapped(_ sender: UIButton) {
@@ -191,14 +191,14 @@ final class ViewController: UIViewController {
   
   // MARK: - Method
   private func showAlert(bmi: BMI) {
-    let alert: UIAlertController = .init(
+    let alert = UIAlertController(
       title: "검사 결과",
       message: #"당신의 BMI 검사 결과는 '\#(bmi.rawValue)' 입니다!"#,
       preferredStyle: .alert
     )
     
     // 타입 어노테이션 vs 타입 추론 컴파일 시점 성능 차이
-    let action: UIAlertAction = .init(title: "확인", style: .default)
+    let action = UIAlertAction(title: "확인", style: .default)
     
     alert.addAction(action)
     
@@ -274,9 +274,9 @@ extension ViewController {
         
       case .secure:
         let imageFont: UIFont = .systemFont(ofSize: 12)
-        let config: UIImage.SymbolConfiguration = .init(font: imageFont)
+        let config = UIImage.SymbolConfiguration(font: imageFont)
         button.setImage(
-          .init(systemName: text, withConfiguration: config),
+          UIImage(systemName: text, withConfiguration: config),
           for: .normal
         )
         button.tintColor = .gray
@@ -313,7 +313,7 @@ extension ViewController {
     ? Constant.secureOffSymbol
     : Constant.secureOnSymbol
     
-    let image: UIImage? = .init(systemName: symbol)
+    let image = UIImage(systemName: symbol)
     
     secureToggleButton.setImage(image, for: .normal)
   }
@@ -343,9 +343,9 @@ extension ViewController {
   }
   
   private func injectHideKeyboardToolbar(_ field: UITextField) {
-    let toolbar: UIToolbar = .init()
+    let toolbar = UIToolbar()
     
-    let flexibleSpace: UIBarButtonItem = .init(
+    let flexibleSpace = UIBarButtonItem(
       barButtonSystemItem: .flexibleSpace,
       target: nil,
       action: nil
@@ -353,7 +353,7 @@ extension ViewController {
     
     let moveFieldBarButton: UIBarButtonItem = getMoveFieldBarButton(field)
     
-    let hideKeyboardBarButton: UIBarButtonItem = .init(
+    let hideKeyboardBarButton = UIBarButtonItem(
       image: UIImage(systemName: Constant.hideKeyboard)?.colored(with: .black),
       style: .plain,
       target: self,
@@ -372,15 +372,15 @@ extension ViewController {
   
   private func getMoveFieldBarButton(_ field: UITextField) -> UIBarButtonItem {
     if field == heightField {
-      return .init(
-        image: .init(systemName: Constant.nextField)?.colored(with: .black),
+      return UIBarButtonItem(
+        image: UIImage(systemName: Constant.nextField)?.colored(with: .black),
         style: .plain,
         target: self,
         action: #selector(moveToNextFieldButtonTapped)
       )
     } else {
-      return .init(
-        image: .init(systemName: Constant.previousField)?.colored(with: .black),
+      return UIBarButtonItem(
+        image: UIImage(systemName: Constant.previousField)?.colored(with: .black),
         style: .plain,
         target: self,
         action: #selector(moveToPreFieldButtonTapped)
