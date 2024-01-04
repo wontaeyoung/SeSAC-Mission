@@ -168,6 +168,8 @@
                             <outletCollection property="gestureRecognizers" destination="F11-Lc-Aqw" appends="YES" id="ine-gz-Zyf"/>
                         </connections>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="1OA-u9-PwF" id="mvo-Kh-4fi"/>
                         <outlet property="heightField" destination="hCE-dn-ZTS" id="oce-nE-6zc"/>

@@ -171,7 +171,6 @@ final class ViewController: UIViewController {
     }
     
     let bmi: Int = calculate(height: height, weight: weight)
-    print(bmi)
     let result: BMI = .checkBMI(bmi: bmi)
     
     showAlert(bmi: result)
@@ -284,6 +283,7 @@ extension ViewController {
     field.layer.cornerRadius = 10
     field.layer.borderColor = UIColor.gray.cgColor
     field.layer.borderWidth = 2
+    injectHideKeyboardToolbar(field)
   }
   
   private func changeResultButtonEnabled(isValid: Bool) {
@@ -329,6 +329,48 @@ extension ViewController {
         weightInputInfoLabel.isHidden = isValid
     }
   }
+  
+  private func injectHideKeyboardToolbar(_ field: UITextField) {
+    let toolbar: UIToolbar = .init()
+    
+    let flexibleSpace: UIBarButtonItem = .init(
+      barButtonSystemItem: .flexibleSpace,
+      target: nil,
+      action: nil
+    )
+    
+    let moveFieldBarButton: UIBarButtonItem = getMoveFieldBarButton(field)
+    
+    let hideKeyboardBarButton: UIBarButtonItem = .init(
+      image: UIImage(systemName: Constant.hideKeyboard)?.colored(with: .black),
+      style: .plain,
+      target: self,
+      action: #selector(hideKeyboardBarButtonTapped)
+    )
+    
+    toolbar.sizeToFit()
+    toolbar.setItems([moveFieldBarButton, flexibleSpace, hideKeyboardBarButton], animated: true)
+    
+    field.inputAccessoryView = toolbar
+  }
+  
+  private func getMoveFieldBarButton(_ field: UITextField) -> UIBarButtonItem {
+    if field == heightField {
+      return .init(
+        image: .init(systemName: Constant.nextField)?.colored(with: .black),
+        style: .plain,
+        target: self,
+        action: #selector(moveToNextFieldButtonTapped)
+      )
+    } else {
+      return .init(
+        image: .init(systemName: Constant.previousField)?.colored(with: .black),
+        style: .plain,
+        target: self,
+        action: #selector(moveToPreFieldButtonTapped)
+      )
+    }
+  }
 }
 
 // MARK: - Logic
@@ -355,6 +397,18 @@ extension ViewController {
     
     return Int(calculated) * 10
   }
+  
+  @objc private func moveToPreFieldButtonTapped() {
+    heightField.becomeFirstResponder()
+  }
+  
+  @objc private func moveToNextFieldButtonTapped() {
+    weightField.becomeFirstResponder()
+  }
+  
+  @objc private func hideKeyboardBarButtonTapped() {
+    view.endEditing(true)
+  }
 }
 
 enum Constant {
@@ -370,4 +424,14 @@ enum Constant {
   
   static let secureOnSymbol: String = "eye.slash.fill"
   static let secureOffSymbol: String = "eye.fill"
+  
+  static let previousField: String = "arrowshape.left.fill"
+  static let nextField: String = "arrowshape.right.fill"
+  static let hideKeyboard: String = "keyboard.chevron.compact.down.fill"
+}
+
+extension UIImage {
+  func colored(with color: UIColor) -> UIImage {
+    return self.withTintColor(color, renderingMode: .alwaysOriginal)
+  }
 }
