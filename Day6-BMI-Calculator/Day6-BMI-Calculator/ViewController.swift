@@ -204,6 +204,18 @@ final class ViewController: UIViewController {
     
     present(alert, animated: true)
   }
+  
+  @objc private func moveToPreFieldButtonTapped() {
+    heightField.becomeFirstResponder()
+  }
+  
+  @objc private func moveToNextFieldButtonTapped() {
+    weightField.becomeFirstResponder()
+  }
+  
+  @objc private func hideKeyboardBarButtonTapped() {
+    view.endEditing(true)
+  }
 }
 
 // MARK: - Set UI
@@ -412,18 +424,6 @@ extension ViewController {
     let calculated: Double = weight / (height * height)
     
     return Int(calculated) * 10
-  }
-  
-  @objc private func moveToPreFieldButtonTapped() {
-    heightField.becomeFirstResponder()
-  }
-  
-  @objc private func moveToNextFieldButtonTapped() {
-    weightField.becomeFirstResponder()
-  }
-  
-  @objc private func hideKeyboardBarButtonTapped() {
-    view.endEditing(true)
   }
 }
 
