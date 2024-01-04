@@ -51,6 +51,15 @@ final class ViewController: UIViewController {
     }
   }
   
+  enum TextFieldTag: Int {
+    case height
+    case weight
+    
+    var tag: Int {
+      return self.rawValue
+    }
+  }
+  
   enum BMIError: Error {
     case optionalBindingFailed
     case textUnfindable
@@ -188,6 +197,7 @@ final class ViewController: UIViewController {
       preferredStyle: .alert
     )
     
+    // 타입 어노테이션 vs 타입 추론 컴파일 시점 성능 차이
     let action: UIAlertAction = .init(title: "확인", style: .default)
     
     alert.addAction(action)
@@ -214,7 +224,9 @@ extension ViewController {
     
     setTextField(heightField)
     setTextField(weightField)
-    weightField.tag = 1
+    
+    heightField.tag = TextFieldTag.height.tag
+    weightField.tag = TextFieldTag.weight.tag
   }
   
   private func setLabel(
@@ -313,7 +325,7 @@ extension ViewController {
   ) {
     switch target {
       case .height:
-        guard isEmpty == false else {
+        guard !isEmpty else {
           heightInputInfoLabel.isHidden = true
           return
         }
@@ -321,7 +333,7 @@ extension ViewController {
         heightInputInfoLabel.isHidden = isValid
         
       case .weight:
-        guard isEmpty == false else {
+        guard !isEmpty else {
           weightInputInfoLabel.isHidden = true
           return
         }
