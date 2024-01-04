@@ -76,6 +76,7 @@ final class ViewController: UIViewController {
     case optionalBindingFailed
     case textUnfindable
     case getRandomNumberFailed
+    case noHistory
     
     var errorDescription: String {
       switch self {
@@ -87,6 +88,9 @@ final class ViewController: UIViewController {
           
         case .getRandomNumberFailed:
           return "랜덤 숫자 획득에 실패했습니다."
+          
+        case .noHistory:
+          return "검사 기록이 저장되어있지 않습니다."
       }
     }
   }
@@ -125,9 +129,10 @@ final class ViewController: UIViewController {
   @IBOutlet weak var nicknameLabel: UILabel!
   @IBOutlet weak var nicknameField: UITextField!
   
-  
   @IBOutlet weak var historyLabel: UILabel!
   @IBOutlet weak var historyValueLabel: UILabel!
+  
+  @IBOutlet weak var resetButton: UIButton!
   
   // MARK: - Property
   private var isSecure: Bool = false
@@ -209,7 +214,7 @@ final class ViewController: UIViewController {
     
     showAlert(bmi: result)
     
-    lastHistory.nickname = nicknameField.text ?? "당신"
+    lastHistory.nickname = nicknameField.text!.isEmpty ? "닉네임 없음" : nicknameField.text!
     lastHistory.height = height
     lastHistory.weight = weight
     
@@ -231,6 +236,11 @@ final class ViewController: UIViewController {
     }
     
     descriptionLabel.text = text + "의 BMI 지수를 알려드릴게요."
+  }
+  
+  @IBAction func resetButtonTapped(_ sender: UIButton) {
+    removeHistory()
+    historyValueLabel.text = " "
   }
   
   // MARK: - Method
@@ -285,6 +295,7 @@ extension ViewController {
     setTextField(nicknameField)
     
     setLabel(historyLabel, text: Constant.historyText, style: .body)
+    setButton(resetButton, text: Constant.resetText, style: .random)
     
     
     heightField.tag = TextFieldTag.height.tag
@@ -496,9 +507,20 @@ extension ViewController {
   }
   
   private func fetch() {
+    guard UserDefaults.standard.integer(forKey: UserDefaultKey.height.rawValue) > .zero else {
+      print(#function, BMIError.noHistory.errorDescription)
+      return
+    }
+    
     lastHistory.nickname = UserDefaults.standard.string(forKey: UserDefaultKey.nickname.rawValue) ?? "당신"
     lastHistory.height = UserDefaults.standard.integer(forKey: UserDefaultKey.height.rawValue)
     lastHistory.weight = UserDefaults.standard.integer(forKey: UserDefaultKey.weight.rawValue)
+  }
+  
+  private func removeHistory() {
+    UserDefaults.standard.removeObject(forKey: UserDefaultKey.nickname.rawValue)
+    UserDefaults.standard.removeObject(forKey: UserDefaultKey.height.rawValue)
+    UserDefaults.standard.removeObject(forKey: UserDefaultKey.weight.rawValue)
   }
 }
 
@@ -514,6 +536,7 @@ enum Constant {
   static let checkResultText: String = "결과 확인"
   static let nicknameText: String = "닉네임을 알려주세요!"
   static let historyText: String = "가장 최근 검사 결과"
+  static let resetText: String = "초기화"
   
   static let secureOnSymbol: String = "eye.slash.fill"
   static let secureOffSymbol: String = "eye.fill"
