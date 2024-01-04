@@ -348,8 +348,12 @@ extension ViewController {
       action: #selector(hideKeyboardBarButtonTapped)
     )
     
+    let toolbarItems: [UIBarButtonItem] = field == heightField
+    ? [flexibleSpace, moveFieldBarButton]
+    : [moveFieldBarButton, flexibleSpace, hideKeyboardBarButton]
+    
     toolbar.sizeToFit()
-    toolbar.setItems([moveFieldBarButton, flexibleSpace, hideKeyboardBarButton], animated: true)
+    toolbar.setItems(toolbarItems, animated: true)
     
     field.inputAccessoryView = toolbar
   }
