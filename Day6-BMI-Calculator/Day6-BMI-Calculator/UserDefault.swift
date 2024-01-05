@@ -8,9 +8,12 @@
 import Foundation
 
 struct User {
-  @UserDefault var nickname: String
-  @UserDefault var height: Int
-  @UserDefault var weight: Int
+  @UserDefault(key: .nickname, defaultValue: "사용자") 
+  var nickname: String
+  @UserDefault(key: .height, defaultValue: 0) 
+  var height: Int
+  @UserDefault(key: .weight, defaultValue: 0) 
+  var weight: Int
 }
 
 // 프로퍼티 래퍼를 통해 중복되는 로직인 저장 / 불러오기를 구현
