@@ -38,7 +38,7 @@ struct User {
 /// UserDefault를 사용하는 값들에 해당 래퍼를 선언하여 구현된 로직을 일괄적으로 재사용
 @propertyWrapper
 struct UserDefault<T: Any> {
-  let key: Key
+  private let key: Key
   private var defaultValue: T
   
   init(
