@@ -7,14 +7,8 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+extension UIViewController {
   // MARK: - Custom Type
-  struct LastHistory {
-    var nickname: String = ""
-    var height: Int = 0
-    var weight: Int = 0
-  }
-  
   enum ValidationTarget {
     case height
     case weight
@@ -66,12 +60,6 @@ final class ViewController: UIViewController {
     }
   }
   
-  enum UserDefaultKey: String {
-    case nickname
-    case height
-    case weight
-  }
-  
   enum BMIError: Error {
     case optionalBindingFailed
     case textUnfindable
@@ -108,6 +96,9 @@ final class ViewController: UIViewController {
     case secure
   }
   
+}
+
+final class ViewController: UIViewController {
   // MARK: - IBOutlet
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
@@ -136,7 +127,7 @@ final class ViewController: UIViewController {
   
   // MARK: - Property
   private var isSecure: Bool = false
-  private var lastHistory = LastHistory() {
+  private var user = User() {
     didSet {
       changeHistoryLabel()
     }
@@ -147,7 +138,7 @@ final class ViewController: UIViewController {
     super.viewDidLoad()
     
     configureUI()
-    fetch()
+    changeHistoryLabel()
   }
   
   // MARK: - IBAction
@@ -156,7 +147,7 @@ final class ViewController: UIViewController {
       let height = heightField.text,
       let weight = weightField.text
     else {
-      print(#function, BMIError.textUnfindable.errorDescription)
+      showLog(error: .textUnfindable)
       return
     }
     
@@ -189,7 +180,7 @@ final class ViewController: UIViewController {
       let randomHeight = ValidationTarget.height.validRange.randomElement(),
       let randomWeight = ValidationTarget.weight.validRange.randomElement()
     else {
-      print(#function, BMIError.getRandomNumberFailed.errorDescription)
+      showLog(error: .getRandomNumberFailed)
       return
     }
     
@@ -200,12 +191,13 @@ final class ViewController: UIViewController {
   
   @IBAction func resultButtonTapped(_ sender: UIButton) {
     guard
+      let nickname = nicknameField.text,
       let heightText = heightField.text,
       let weightText = weightField.text,
       let height = Int(heightText),
       let weight = Int(weightText)
     else {
-      print(#function, BMIError.optionalBindingFailed.errorDescription)
+      showLog(error: .optionalBindingFailed)
       return
     }
     
@@ -213,12 +205,7 @@ final class ViewController: UIViewController {
     let result: BMI = .checkBMI(bmi: bmi)
     
     showAlert(bmi: result)
-    
-    lastHistory.nickname = nicknameField.text!.isEmpty ? "닉네임 없음" : nicknameField.text!
-    lastHistory.height = height
-    lastHistory.weight = weight
-    
-    save()
+    save(nickname: nickname, height: height, weight: weight)
   }
   
   @IBAction func keyboardDismiss(_ sender: UITapGestureRecognizer) {
@@ -226,12 +213,17 @@ final class ViewController: UIViewController {
   }
   
   @IBAction func nicknameFieldReturned(_ sender: UITextField) {
-    UserDefaults.standard.set(nicknameField.text, forKey: UserDefaultKey.nickname.rawValue)
+    guard let nickname = nicknameField.text else {
+      showLog(error: .optionalBindingFailed)
+      return
+    }
+    
+    user.nickname = nickname
   }
   
   @IBAction func nicknameInputChanged(_ sender: UITextField) {
     guard let text = sender.text else {
-      print(#function, BMIError.optionalBindingFailed.errorDescription)
+      showLog(error: .textUnfindable)
       return
     }
     
@@ -239,7 +231,7 @@ final class ViewController: UIViewController {
   }
   
   @IBAction func resetButtonTapped(_ sender: UIButton) {
-    removeHistory()
+    user.removeHistory()
     historyValueLabel.text = " "
   }
   
@@ -247,7 +239,7 @@ final class ViewController: UIViewController {
   private func showAlert(bmi: BMI) {
     let alert = UIAlertController(
       title: "검사 결과",
-      message: #"당신의 BMI 검사 결과는 '\#(bmi.rawValue)' 입니다!"#,
+      message: #"\#(user.nickname)의 BMI 검사 결과는 '\#(bmi.rawValue)' 입니다!"#,
       preferredStyle: .alert
     )
     
@@ -257,6 +249,10 @@ final class ViewController: UIViewController {
     alert.addAction(action)
     
     present(alert, animated: true)
+  }
+  
+  private func showLog(function: String = #function, error: BMIError) {
+    print(function, error.errorDescription)
   }
   
   @objc private func moveToPreFieldButtonTapped() {
@@ -276,7 +272,7 @@ final class ViewController: UIViewController {
 extension ViewController {
   private func configureUI() {
     setLabel(titleLabel, text: Constant.titleText, style: .title)
-    setLabel(descriptionLabel, text: Constant.descText, style: .desc)
+    setLabel(descriptionLabel, text: user.nickname + Constant.descText, style: .desc)
     setLabel(heightLabel, text: Constant.heightText, style: .body)
     setLabel(weightLabel, text: Constant.weightText, style: .body)
     setLabel(heightInputInfoLabel, text: Constant.heightInvalidText, style: .inputValidInfo)
@@ -296,7 +292,6 @@ extension ViewController {
     
     setLabel(historyLabel, text: Constant.historyText, style: .body)
     setButton(resetButton, text: Constant.resetText, style: .random)
-    
     
     heightField.tag = TextFieldTag.height.tag
     weightField.tag = TextFieldTag.weight.tag
@@ -416,7 +411,7 @@ extension ViewController {
   }
   
   private func changeHistoryLabel() {
-    historyValueLabel.text = "\(lastHistory.nickname): \(lastHistory.height)cm x \(lastHistory.weight)"
+    historyValueLabel.text = "\(user.nickname): \(user.height)cm x \(user.weight)"
   }
   
   private func injectHideKeyboardToolbar(_ field: UITextField) {
@@ -500,33 +495,27 @@ extension ViewController {
     return Int(calculated) * 10
   }
   
-  private func save() {
-    UserDefaults.standard.set(lastHistory.nickname, forKey: UserDefaultKey.nickname.rawValue)
-    UserDefaults.standard.set(lastHistory.height, forKey: UserDefaultKey.height.rawValue)
-    UserDefaults.standard.set(lastHistory.weight, forKey: UserDefaultKey.weight.rawValue)
+  private func save(
+    nickname: String,
+    height: Int,
+    weight: Int
+  ) {
+    user.nickname = nickname
+    user.height = height
+    user.weight = weight
   }
   
   private func fetch() {
-    guard UserDefaults.standard.integer(forKey: UserDefaultKey.height.rawValue) > .zero else {
-      print(#function, BMIError.noHistory.errorDescription)
+    guard user.height > .zero else {
+      showLog(error: .noHistory)
       return
     }
-    
-    lastHistory.nickname = UserDefaults.standard.string(forKey: UserDefaultKey.nickname.rawValue) ?? "당신"
-    lastHistory.height = UserDefaults.standard.integer(forKey: UserDefaultKey.height.rawValue)
-    lastHistory.weight = UserDefaults.standard.integer(forKey: UserDefaultKey.weight.rawValue)
-  }
-  
-  private func removeHistory() {
-    UserDefaults.standard.removeObject(forKey: UserDefaultKey.nickname.rawValue)
-    UserDefaults.standard.removeObject(forKey: UserDefaultKey.height.rawValue)
-    UserDefaults.standard.removeObject(forKey: UserDefaultKey.weight.rawValue)
   }
 }
 
 enum Constant {
   static let titleText: String = "BMI Calculator"
-  static let descText: String = "\(UserDefaults.standard.string(forKey: ViewController.UserDefaultKey.nickname.rawValue) ?? "당신")의 BMI 지수를 알려드릴게요."
+  static let descText: String = "의 BMI 지수를 알려드릴게요."
   static let heightText: String = "키가 어떻게 되시나요?"
   static let heightInvalidText: String = "키는 100 ~ 250 사이로 입력 가능해요!"
   static let weightText: String = "몸무게는 어떻게 되시나요?"
