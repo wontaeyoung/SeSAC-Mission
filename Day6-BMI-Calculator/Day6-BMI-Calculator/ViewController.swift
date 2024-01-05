@@ -411,7 +411,9 @@ extension ViewController {
   }
   
   private func changeHistoryLabel() {
-    historyValueLabel.text = "\(user.nickname): \(user.height)cm x \(user.weight)"
+    print(user.height)
+    let historyText: String = user.height > .zero ? "\(user.nickname): \(user.height)cm x \(user.weight)kg" : " "
+    historyValueLabel.text = historyText
   }
   
   private func injectHideKeyboardToolbar(_ field: UITextField) {
